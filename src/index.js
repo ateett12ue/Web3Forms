@@ -12,14 +12,14 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 ReactDOM.render(
   <React.StrictMode>
-    <MoralisProvider appId="xxxxx" serverUrl="xxxxx">
+    <MoralisProvider appId="ofgQp8fHarMqUssAzqTmFBY8JnYzrpH5FG2B9X50" serverUrl="https://syq3g4wb2vtj.usemoralis.com:2053/server">
       <NotificationProvider>
         {/* <ConfigProvider locale={enUS}> */}
-        {/* <ChakraProvider> */}
+        <ChakraProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        {/* </ChakraProvider> */}
+        </ChakraProvider>
         {/* </ConfigProvider> */}
       </NotificationProvider>
     </MoralisProvider>
