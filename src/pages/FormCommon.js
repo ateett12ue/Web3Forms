@@ -25,7 +25,14 @@ const FormCommon = (props) => {
         }
     },[])
   return (
-    <Box p={2} my={4} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+    <Box 
+        boxShadow="dark-lg"
+        p={8}
+        my={1}
+        borderRadius="13px"
+        width="2xl"
+        color="#fff"
+    >
       <Box my={4} textAlign="left" >
             <Box display={"flex"} flexDirection="row" width="full" justifyContent="space-between" height="full">
                 <Box width="270px">
@@ -76,7 +83,13 @@ const FormCommon = (props) => {
               isDisable
               ?
               (
-                <Alert status='error' borderRadius={13}>
+                <Alert 
+                    status='error' 
+                    borderRadius={13}
+                    boxShadow="dark-lg"
+                    color="gray"
+                    fontWeight="medium"
+                >
                     <AlertIcon />
                     <AlertDescription>Disclaimer — Please note, These are auto genereated answers and users can opt out of sharing this information.</AlertDescription>
                 </Alert>

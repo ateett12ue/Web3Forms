@@ -13,21 +13,23 @@ import {
     Badge
   } from '@chakra-ui/react'
 import {TruncateAddress} from "../addressTruncate"
-const FormSubmit = () => {
+import {useMoralis} from "react-moralis"
+const FormSubmit = (props) => {
+  const {user} = useMoralis();
   return (
-    <Box p={2} my={4} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+    <Box boxShadow='dark-lg' p={2} my={4}  borderRadius="13px" width="2xl" color="#fff">
       <Box my={4} textAlign="left" >
             <Box display={"flex"} flexDirection="row" width="full" justifyContent="space-between" alignItems="center" alignContent="center" height="full">
                 <Box width="270px">
-                    <Badge colorScheme='green'>
-                        <Text fontSize={15} fontWeight="bold">
-                            {TruncateAddress('0x3736a0509285b8246863Dba8E3eD00751D6DE7B4')}
+                    <Badge color="#fff" bg="teal" padding={2} borderRadius="2xl">
+                        <Text fontSize={18} fontWeight="medium">
+                            {TruncateAddress(user.attributes.ethAddress)}
                         </Text>
                     </Badge>
                 </Box>
                 <Box width="270px">
-                    <Button width="full" type="submit">
-                        Submit
+                    <Button onClick={props.onSubmit} width="full" type="submit" bg="teal" whiteSpace="normal">
+                        SUBMIT
                     </Button>
                 </Box>
             </Box>

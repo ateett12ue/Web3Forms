@@ -15,7 +15,7 @@ import {
   } from '@chakra-ui/react'
 const FormUtil = () => {
   return (
-    <Box p={2} my={4} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+    <Box boxShadow='dark-lg' p={8} my={4}  borderRadius="13px" width="2xl" color="#fff">
       <Box my={4} textAlign="left" >
             <Box display={"flex"} flexDirection="row" width="full" justifyContent="space-between">
                 <Box width="270px">
@@ -35,7 +35,7 @@ const FormUtil = () => {
             </Box>
       </Box>
       <Box>
-            <Alert status='error' borderRadius={13}>
+            <Alert boxShadow='dark-lg' status='error' borderRadius={13} color='gray' fontWeight="medium">
                 <AlertIcon />
                 <AlertDescription>Disclaimer — Please note, once submitted you can't change this.</AlertDescription>
             </Alert>
