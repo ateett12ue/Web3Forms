@@ -25,7 +25,7 @@ import {
 const SimpleFormView = () => {
   const [showUserInformtation, setShowUserInformation] = useState(true);
   return (
-    <Flex width="full" align="center" justifyContent="center" direction={"column"} >
+    <Flex width="full" align="center" justifyContent="center" direction={"column"} color="white" >
         <form>
         <FormSubmit/>
         <Box p={2} mb={3} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl" display="flex" justifyContent="space-between">
