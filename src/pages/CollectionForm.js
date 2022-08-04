@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Box, Flex} from '@chakra-ui/react';
 import FormUtil from "./FormUtil"
 import FormCommon from "./FormCommon"
@@ -22,19 +22,36 @@ import {
   } from '@chakra-ui/react'
 import CollectionFormSubmitModal from "./CollectionFormSubmitModal";
 const CollectionForm = () => {
+    const [openModal, toggleModalOpen]=useState(false)
+    const submitForm = () => {
+        toggleModalOpen(true)
+    }
   return (
-    <Flex width="full" align="center" justifyContent="center" direction={"column"} >
+    <Flex width="full" align="center" justifyContent="center" direction={"column"} color="#fff">
+        <Box color="teal" fontSize="2xl" fontWeight="bold" letterSpacing="wider">
+            Collection Template
+        </Box>
         <form>
-        <FormSubmit/>
+        <FormSubmit onSubmit={()=>submitForm()}/>
         <FormUtil/>
-        <Box p={2} mb={3} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+        <Box boxShadow="dark-lg"
+          p={8}
+          my={4}
+          borderRadius="13px"
+          width="2xl"
+          color="#fff">
                 <FormControl>
                     <FormLabel>Description</FormLabel>
                     <Textarea size="md"/>
                     <FormHelperText>Writing anything that u want to convey</FormHelperText>
                 </FormControl>
         </Box>
-            <Box p={2} mb={3} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+            <Box boxShadow="dark-lg"
+          p={8}
+          my={4}
+          borderRadius="13px"
+          width="2xl"
+          color="#fff">
                 <Box display={"flex"} flexDirection="row" width="full" justifyContent="space-between" height="full">
                     <Box width="270px">
                         <FormControl>
@@ -64,23 +81,36 @@ const CollectionForm = () => {
                 </Box>
             </Box>
             <Box mt={4}>
-                <Alert status='error' borderRadius={13}>
+                <Alert boxShadow="dark-lg"
+              status="error"
+              borderRadius={13}
+              color="gray"
+              fontWeight="medium">
                     <AlertIcon />
-                    <AlertDescription>Disclaimer — Please note, This will be shown with the total amount you collected.</AlertDescription>
+                    <AlertDescription>Disclaimer — This will be shown with the total amount you collected.</AlertDescription>
                 </Alert>
             </Box>
             </Box>
             <Divider orientation='horizontal' my={7}/>
             <Box>
-                <Alert status='info' borderRadius={13}>
+                <Alert status="info"
+            borderRadius={13}
+            boxShadow="dark-lg"
+            color="gray"
+            fontWeight="medium">
                     <AlertIcon />
-                    <AlertDescription>Everything Below this will be filled by ur Users</AlertDescription>
+                    <AlertDescription>Everything below this will be filled by your users</AlertDescription>
                 </Alert>
             </Box>
-            <Box>
+            <Box my={4}>
                 <FormCommon/>
             </Box>
-            <Box p={2} mb={2} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+            <Box  boxShadow="dark-lg"
+          p={8}
+          my={4}
+          borderRadius="13px"
+          width="2xl"
+          color="#fff">
                 <FormControl mt={1} isDisabled>
                     <FormLabel>Address you want your Merch to get Delivered</FormLabel>
                     <Textarea size="md"/>
@@ -98,7 +128,7 @@ const CollectionForm = () => {
                 </FormControl>
             </Box>
         </form>
-        <CollectionFormSubmitModal submitForm={true}/>
+        <CollectionFormSubmitModal openModal={openModal} onClose={()=>toggleModalOpen(false)}/>
     </Flex>
   )
 }

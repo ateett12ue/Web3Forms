@@ -7,19 +7,20 @@ import {Button, Modal,
     ModalBody,
     ModalCloseButton, FormControl, Input,FormLabel, useDisclosure, FormErrorMessage} from "@chakra-ui/react"
 const CollectionFormSubmitModal = (props) => {
-    const { onClose } = useDisclosure()
   
     return (
       <>
         <Modal
-          onClose={onClose}
-          isOpen={props.submitForm}
+          onClose={props.onClose}
+          isOpen={props.openModal}
+          motionPreset="slideInBottom"
+          size="2xl"
         >
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Please Confirm the wallet Address in which you will receive money</ModalHeader>
             <ModalCloseButton />
-            <ModalBody pb={6}>
+            <ModalBody pb={10}>
               <FormControl isRequired>
                 <FormLabel>Amount to pool for survey</FormLabel>
                 <Input />
@@ -31,7 +32,7 @@ const CollectionFormSubmitModal = (props) => {
               <Button colorScheme='blue' mr={3}>
                 Submit
               </Button>
-              <Button onClick={onClose}>Go Back</Button>
+              <Button onClick={props.onClose}>Go Back</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
