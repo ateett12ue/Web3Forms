@@ -15,6 +15,7 @@ const Dashboard = (props) => {
         }
         fetchMyForms()
     },[account])
+    
     const closeModal = () => {
         props.modaltoggle(false)
     }

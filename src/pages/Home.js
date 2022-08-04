@@ -7,19 +7,13 @@ const Home = () => {
     const {authenticate} = useMoralis()
   return (
     <Box marginTop={2}>
-        <Box bg='#1E1E1E' w='100%' py={13} px={9} color='white' display={'flex'} alignItems="flex-start" justifyContent="space-between">
+        <Box bg='#1E1E1E' w='100%' py={13} px={8} color='white' display={'flex'} alignItems="flex-start" justifyContent="space-between">
             <Box display="flex" fontWeight="bold">
-                <Text fontSize={24} boxShadow='inner'>
-                    📜3
+                <Text fontSize={28} fontFamily={"cursive"} boxShadow='inner' color="teal" letterSpacing="wider">
+                    Re
                 </Text>
-                <Text fontSize={20} boxShadow='inner'>
-                    fo
-                </Text>
-                <Text fontSize={28} fontFamily={"cursive"} boxShadow='inner' color="teal">
-                    R
-                </Text>
-                <Text fontSize={20} boxShadow='inner'>
-                    md
+                <Text fontSize={20} fontFamily={"cursive"} boxShadow='inner'>
+                    Form
                 </Text>
             </Box>
             <Box>

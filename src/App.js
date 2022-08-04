@@ -33,19 +33,13 @@ const App = () => {
         (
           <>
           <Box w='100%' px={5} py={5} color='gray.400' display={'flex'} alignItems="flex-start" justifyContent="space-between">
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: 'none' }}>
               <Box display="flex" fontWeight="bold">
-                    <Text fontSize={24} boxShadow='inner'>
-                        📜3
+                    <Text fontSize={28} fontFamily={"cursive"} boxShadow='inner' color="teal" letterSpacing="wider">
+                        Re
                     </Text>
-                    <Text fontSize={20} boxShadow='inner'>
-                        fo
-                    </Text>
-                    <Text fontSize={28} fontFamily={"cursive"} boxShadow='inner' color="teal">
-                        R
-                    </Text>
-                    <Text fontSize={20} boxShadow='inner'>
-                        md
+                    <Text fontSize={20} fontFamily={"cursive"} boxShadow='inner'>
+                        Form
                     </Text>
                 </Box>
               </Link>
