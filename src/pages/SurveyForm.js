@@ -22,11 +22,23 @@ import {
 import SurveyFormSubmitModal from "./CollectionFormSubmitModal";
 const SurveyForm = () => {
   return (
-    <Flex width="full" align="center" justifyContent="center" direction={"column"} >
+    <Flex width="full"
+    align="center"
+    justifyContent="center"
+    direction={"column"}
+    color="#fff" >
+        <Box color="teal" fontSize="2xl" fontWeight="bold" letterSpacing="wider">
+            Survey Template
+        </Box>
         <form>
         <FormSubmit/>
         <FormUtil/>
-            <Box p={2} mb={3} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+            <Box boxShadow="dark-lg"
+          p={8}
+          my={4}
+          borderRadius="13px"
+          width="2xl"
+          color="#fff">
                 <FormControl>
                     <FormLabel>Description</FormLabel>
                     <Textarea size="md"/>
@@ -34,16 +46,22 @@ const SurveyForm = () => {
                 </FormControl>
             </Box>
             <Divider orientation='horizontal' my={7}/>
-            <Box>
+            <Box my={4}>
                 <Alert status='info' borderRadius={13}>
                     <AlertIcon />
                     <AlertDescription>Everything Below this will be filled by ur Users</AlertDescription>
                 </Alert>
             </Box>
-            <Box>
+            <Box my={4}>
                 <FormCommon/>
             </Box>
-            <Box p={2} mb={2} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
+            <Box boxShadow="dark-lg"
+                p={8}
+                my={4}
+                borderRadius="13px"
+                width="2xl"
+                color="#fff"
+            >
                 <FormControl mt={1} isDisabled>
                     <FormLabel>What do u think about 3foRmd</FormLabel>
                     <Textarea size="md"/>
