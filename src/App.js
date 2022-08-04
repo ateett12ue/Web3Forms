@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from './pages/Dashboard';
-import {Box, Text} from "@chakra-ui/react"
+import {Box, Text, Button} from "@chakra-ui/react"
 import NoMatch from './pages/NoMatch'
 import CreateFormModal from "./pages/CreateFormModal"
 import ViewForm from "./pages/ViewForm"
@@ -14,9 +14,13 @@ import {ConnectButton} from "web3uikit"
 import {useMoralis} from "react-moralis";
 const App = () => {
   // const [authentication, setAuthentication] = useState(true)
-  const {isAuthenticated} = useMoralis();
+  const {isAuthenticated, Moralis, account} = useMoralis();
+  const [openModal, toggleModalOpen] = useState(false)
+  const openToggle=(toggle)=>{
+    toggleModalOpen(toggle)
+  }
   return(
-    <>
+    <div>
       {
         !isAuthenticated
         ?
@@ -28,35 +32,47 @@ const App = () => {
         :
         (
           <>
-          <Box bg='tomato' w='100%' py={5} color='white' display={'flex'} alignItems="flex-start" justifyContent="space-evenly">
-            <Box>
-                <Text fontSize={24} fontFamily={"cursive"}>
-                    3FORMS
-                </Text>
-            </Box>
-            <Box>
-                <Text fontSize={21} fontFamily={"Goudy Bookletter 1911"} onClick={()=>{console.log('aaahhhaaa', isAuthenticated)}}>
-                    Create Forms
-                </Text>
-            </Box>
-            <Box>
-                <ConnectButton/>
+          <Box w='100%' px={5} py={5} color='gray.400' display={'flex'} alignItems="flex-start" justifyContent="space-between">
+            <Link to="/">
+              <Box display="flex" fontWeight="bold">
+                    <Text fontSize={24} boxShadow='inner'>
+                        📜3
+                    </Text>
+                    <Text fontSize={20} boxShadow='inner'>
+                        fo
+                    </Text>
+                    <Text fontSize={28} fontFamily={"cursive"} boxShadow='inner' color="teal">
+                        R
+                    </Text>
+                    <Text fontSize={20} boxShadow='inner'>
+                        md
+                    </Text>
+                </Box>
+              </Link>
+            <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
+              <Box>
+                  <Button onClick={()=>openToggle(true)} color="teal">
+                      Create Forms
+                  </Button>
+              </Box>
+              <ConnectButton/>
             </Box>
           </Box>
+          <CreateFormModal openModal={openModal} closeModal={()=>toggleModalOpen(false)}/>
           <Routes>
-            <Route exact path="/" element={<Dashboard />} />
+            <Route exact path="/" element={<Dashboard/>} />
             <Route exact path="/create-form" element={<CreateFormModal openModal={true}/>} />
             <Route exact path="/show-form-response" element={<ViewForm/>} />
             <Route exact path="/create-form/survey-template" element={<SurveyForm/>} />
             <Route exact path="/create-form/collection-template" element={<CollectionForm/>} />
-            <Route exact path="/create-form/simple-template" element={<SimpleForm/>} />
+            <Route exact path="/create-form/general-template" element={<SimpleForm/>} />
             <Route exact path="/user-view-form" element={<UserFormView/>} />
             <Route path="*" element={<NoMatch/>} />
           </Routes>
           </>
         )
       }
-      </>
+      </div>
   )
 };
 
