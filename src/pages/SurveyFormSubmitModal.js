@@ -5,38 +5,50 @@ import {Button, Modal,
     ModalHeader,
     ModalFooter,
     ModalBody,
-    ModalCloseButton, FormControl, Input,FormLabel, useDisclosure, Alert, AlertIcon, AlertDescription
+    ModalCloseButton, FormControl, Input,FormLabel, Alert, AlertIcon, AlertDescription
 } from "@chakra-ui/react"
+import {useForm} from "react-hook-form"
 const SurveyFormSubmitModal = (props) => {
-    const { onClose } = useDisclosure()
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm()
+
+  const onSubmitModal = async(value) => {
+    console.log(value);
+    props.onSubmit(value)
+  }
   
     return (
       <>
         <Modal
-          onClose={onClose}
+          onClose={props.onClose}
           isOpen={props.submitForm}
         >
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Please Deposit Survey Amount</ModalHeader>
             <ModalCloseButton />
+            <form onSubmit={handleSubmit(onSubmitModal)}>
             <ModalBody pb={6}>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Amount</FormLabel>
-                <Input />
+                <Input {...register("depositAmount")} name="depositAmount"/>
               </FormControl>
-              <Alert status='error' borderRadius={13}>
+              <Alert status='error' borderRadius={13} mt={5}>
                 <AlertIcon />
                 <AlertDescription>Disclaimer — Please note, Once Submitted you can't withdraw your funds.</AlertDescription>
             </Alert>
             </ModalBody>
   
             <ModalFooter>
-              <Button colorScheme='blue' mr={3} isDisabled>
+              <Button colorScheme='blue' mr={3} type="submit">
                 Submit
               </Button>
-              <Button onClick={onClose}>Go Back</Button>
+              <Button onClick={props.onClose}>Go Back</Button>
             </ModalFooter>
+            </form>
           </ModalContent>
         </Modal>
       </>
