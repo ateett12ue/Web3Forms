@@ -13,7 +13,9 @@ import {
     AlertTitle,
     AlertDescription,
   } from '@chakra-ui/react'
+import {useForm} from "react-hook-form"
 const FormUtil = () => {
+  const { register, handleSubmit } = useForm();
   return (
     <Box boxShadow='dark-lg' p={8} my={4}  borderRadius="13px" width="2xl" color="#fff">
       <Box my={4} textAlign="left" >
@@ -21,14 +23,14 @@ const FormUtil = () => {
                 <Box width="270px">
                     <FormControl>
                         <FormLabel>Form Name</FormLabel>
-                        <Input type="text"/>
+                        <Input {...register("formName")} name="formName" type="text" required/>
                         <FormHelperText>Please Make Sure Its Unique</FormHelperText>
                     </FormControl>
                 </Box>
                 <Box width="270px">
                     <FormControl>
                         <FormLabel>End Date</FormLabel>
-                        <Input type="datetime-local"/>
+                        <Input {...register("endDate")} name="endDate" type="datetime-local" required/>
                         <FormHelperText>After this Date, your form will be disabled for inputs </FormHelperText>
                     </FormControl>
                 </Box>

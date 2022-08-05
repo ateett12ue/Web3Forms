@@ -28,7 +28,7 @@ const FormSubmit = (props) => {
                     </Badge>
                 </Box>
                 <Box width="270px">
-                    <Button onClick={props.onSubmit} width="full" type="submit" bg="teal" whiteSpace="normal">
+                    <Button isLoading={props.submitting} loadingText="Submitting" type="submit" width="full" bg="teal" whiteSpace="normal">
                         SUBMIT
                     </Button>
                 </Box>
