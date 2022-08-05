@@ -8,12 +8,10 @@ import {Button, Modal,
     ModalCloseButton, FormControl, Input,FormLabel, useDisclosure, Alert, AlertIcon, AlertDescription} from "@chakra-ui/react"
 
 const SimpleFormSubmitModal = (props) => {
-    const { onClose } = useDisclosure()
-  
     return (
       <>
         <Modal
-          onClose={onClose}
+          onClose={props.onClose}
           isOpen={props.submitForm}
         >
           <ModalOverlay />
@@ -28,10 +26,10 @@ const SimpleFormSubmitModal = (props) => {
             </ModalBody>
   
             <ModalFooter>
-              <Button colorScheme='blue' mr={3} isDisabled>
+              <Button colorScheme='blue' mr={3} onClick={props.onSubmit}>
                 Submit
               </Button>
-              <Button onClick={onClose}>Go Back</Button>
+              <Button onClick={props.onClose}>Go Back</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
