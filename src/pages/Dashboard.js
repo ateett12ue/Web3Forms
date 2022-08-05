@@ -8,40 +8,51 @@ const Dashboard = (props) => {
     const {Moralis, account} = useMoralis();
     const [formList, setFormList] = useState([])
     useEffect(()=>{
-        async function fetchMyForms() {
-            const formList = await Moralis.Cloud.run("getFormsByUserId", {id: account});
-            setFormList(formList);
-            // await Moralis.Cloud.run("list_name", {"attributes"})
+        async function fetchAllForms() {
+            try
+            {
+                const allFormsResults = await Moralis.Cloud.run("getFormsByUserId", {id: account});
+                const result = formMappedData(allFormsResults)
+                setFormList(result)
+            }
+            catch(ex)
+            {
+                console.log("error from dash", ex)
+            }
+           
         }
-        fetchMyForms()
-    },[account])
-    
+        fetchAllForms()
+    })
+    const formMappedData = (data) => {
+        const dataArray = []
+        const result= data.forEach((formData) => {
+            const dateLeft = moment(formData.closingDate, "DD/MM/YYYY hh:mm:ss").fromNow(); 
+            let data = []
+            data.push(<><div style={{marginLeft: '16px'}}><Typography color="#041836" variant="body16">{formData.name}</Typography></div></>)
+            data.push(<Typography color="#68738D" variant="body16">{formData.formId}</Typography>,)
+            data.push(!formData.formId ? <Badge state="danger" text="Closed" /> : <Badge state="success" text="Active" />)
+            data.push(<Typography color="#68738D" variant="body16">{formData.closingDate}</Typography>)
+            data.push(<Tag size={'lg'} variant='solid' colorScheme='purple'>{formData.formType}</Tag>)
+            data.push(<Tag size={'lg'} variant='solid' colorScheme='teal'>{dateLeft}</Tag>)
+            data.push(<><Button color="blue" isTransparent size="small" text="Responses" onClick={()=>openResponses(formData.formId)}/></>)
+            dataArray.push(data)
+        })
+        return dataArray;
+    }
     const closeModal = () => {
         props.modaltoggle(false)
     }
     const openResponses = (formId) => {
         console.log(formId)
     }
+
     return (
         <Box>
             <Box h="600px" w="100%" display="flex" justifyContent="center" alignItems={"center"}>
                 <Table
                 alignCellItems="center"
-                columnsConfig="1fr 2fr 1fr 1.5fr 1fr 1fr 0.7fr"
-                data={
-                    formList.map((formData) => {
-                        const dateLeft = moment("11/08/2022, 06:24:00", "DD/MM/YYYY hh:mm:ss").fromNow(); 
-                        return(
-                            <><div style={{marginLeft: '16px'}}><Typography color="#041836" variant="body16">{formData.name}</Typography></div></>,
-                            <Typography color="#68738D" variant="body16">{formData.formId}</Typography>,
-                            !formData.formId ? <Badge state="danger" text="Closed" /> : <Badge state="success" text="Active" />,
-                            <Typography color="#68738D" variant="body16">{formData.closingDate}</Typography>,
-                            <Tag size={'lg'} variant='solid' colorScheme='purple'>{formData.formType}</Tag>,
-                            <Tag size={'lg'} variant='solid' colorScheme='teal'>{dateLeft}</Tag>,
-                            <><Button color="blue" isTransparent size="small" text="Responses" onClick={()=>openResponses(formData.formId)}/></>
-                        )
-                    })
-                }
+                columnsConfig="1.5fr 2fr 1fr 1.5fr 1fr 1fr 0.7fr"
+                data={formList}
                 header={[
                     <span>Name</span>,
                     <span>Form Id</span>,
