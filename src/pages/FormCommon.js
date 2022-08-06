@@ -27,10 +27,11 @@ const FormCommon = (props) => {
   return (
     <Box 
         boxShadow="dark-lg"
-        p={8}
+        py={8}
+        px={8}
         my={1}
         borderRadius="13px"
-        width="2xl"
+        width={!isDisable ? "1.5xl" : "2xl"}
         color="#fff"
     >
       <Box my={4} textAlign="left" >
@@ -96,7 +97,11 @@ const FormCommon = (props) => {
               )
               :
               (
-                <Alert status="info" borderRadius={13}>
+                <Alert status='error' 
+                borderRadius={13}
+                boxShadow="dark-lg"
+                color="gray"
+                fontWeight="medium">
                     <AlertIcon />
                     <AlertDescription>Please Note, this information is quite confidential. You can opt out of sharing this.</AlertDescription>
                 </Alert>

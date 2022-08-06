@@ -17,7 +17,7 @@ import {useMoralis} from "react-moralis"
 const FormSubmit = (props) => {
   const {user} = useMoralis();
   return (
-    <Box boxShadow='dark-lg' p={2} my={4}  borderRadius="13px" width="2xl" color="#fff">
+    <Box bgColor="#1E1E1E" boxShadow='dark-lg' p={2} my={4}  borderRadius="13px" width="2xl" color="#fff">
       <Box my={4} textAlign="left" >
             <Box display={"flex"} flexDirection="row" width="full" justifyContent="space-between" alignItems="center" alignContent="center" height="full">
                 <Box width="270px">
