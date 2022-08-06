@@ -7,7 +7,7 @@ import CollectionFormView from "./CollectionFormView"
 import SurveyFormView from "./SurveyFormView"
 const UserFormView = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [formType, setFormType] = useState('CollectionForm');
+    const [formType, setFormType] = useState('SimpleForm');
     const [formData, setFormData] = useState('');
     const [ethAddress, setEthAddress] = useState('ss');
     let formId = searchParams.get("formId");
@@ -38,18 +38,6 @@ const UserFormView = () => {
     }
     return(
         <Box>
-            <Box bg='tomato' w='100%' mb={4} py={5} color='white' display={'flex'} alignItems="flex-start" justifyContent="space-between">
-                <Box>
-                    <Text fontSize={24} fontFamily={"cursive"}>
-                        3FORMS
-                    </Text>
-                </Box>
-                <Box>
-                    <Text fontSize={21} fontFamily={"cursive"}>
-                        Connect Button
-                    </Text>
-                </Box>
-          </Box>
             {
                 !ethAddress
                 ?
