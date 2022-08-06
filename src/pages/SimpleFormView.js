@@ -1,107 +1,184 @@
-import React,{useState} from 'react'
-import {Box, Flex} from '@chakra-ui/react';
-import FormUtil from "./FormUtil"
-import FormCommon from "./FormCommon"
-import FormSubmit from "./FormSubmit"
+import React, { useState } from "react";
+import { Box, Flex } from "@chakra-ui/react";
+import FormUtil from "./FormUtil";
+import FormCommon from "./FormCommon";
+import FormSubmit from "./FormSubmit";
+import { FormControl, FormLabel, Textarea, Input } from "@chakra-ui/react";
+import { Switch, Container, Text } from "@chakra-ui/react";
 import {
-    FormControl,
-    FormLabel,
-    Textarea,
-    Input
-  } from '@chakra-ui/react'
-import {
-    Switch,
-    Container,
-    Text
-} from '@chakra-ui/react'
-import {
-    Stat,
-    StatLabel,
-    StatNumber,
-    StatHelpText,
-    StatArrow,
-    StatGroup,
-} from '@chakra-ui/react'
+  Stat,
+  StatLabel,
+  StatNumber,
+  Divider,
+  StatArrow,
+  StatGroup,
+} from "@chakra-ui/react";
+import Loader from "./Loader";
+import { useMoralis } from "react-moralis";
+import { useForm } from "react-hook-form";
+import { getNanoid } from "../getNanoid";
+import { useNotification } from "web3uikit";
 const SimpleFormView = () => {
   const [showUserInformtation, setShowUserInformation] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
+  const onSubmit = async (value) => {
+    console.log("assaas");
+  };
   return (
-    <Flex width="full" align="center" justifyContent="center" direction={"column"} color="white" >
-        <form>
-        <FormSubmit/>
-        <Box p={2} mb={3} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl" display="flex" justifyContent="space-between">
-              <Box>
-                <Text>Form Title</Text>
-                <Container>Description Comes Here</Container>
-              </Box>
-              <Box>
-                <Stat>
-                  <StatLabel>Days Left </StatLabel>
-                  <StatNumber>3</StatNumber>
-                </Stat>
-              </Box>
-        </Box>
-        <Box p={2} mb={3} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
-          <Box display={"flex"} flexDirection="row" width="full" justifyContent="space-between" height="full">
-            <Stat>
-              <StatLabel>Company's Name</StatLabel>
-              <StatNumber>Company Name</StatNumber>
-            </Stat>
-            <Stat>
-              <StatLabel>Follow Us</StatLabel>
-              <StatNumber>@Twitter_Handel</StatNumber>
-            </Stat>
+    <Flex
+    width="full"
+    align="center"
+    justifyContent="center"
+    direction={"column"}
+    color="#fff"
+    >
+      <Box color="teal" fontSize="3xl" fontWeight="bold" letterSpacing="wider">
+        Form Title
+      </Box>
+      <Loader isLoading={loading} />
+      <Box borderRadius="13px" p={5} mb={5} bgColor="whiteAlpha.500">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormSubmit submitting={isSubmitting}/>
+        <Box
+          boxShadow="dark-lg"
+          p={5}
+          my={4}
+          bgColor="#1E1E1E"
+          borderRadius="13px"
+          width="2xl"
+          color="#fff"
+          display="flex"
+          direction={"row"}
+          justifyContent="space-between"
+        >
+          <Box flex="4" fontSize="xl">
+            <Container>
+                Description Comes Here Description Comes Here Description Comes
+                Here Description Comes Here Description Comes Here Description
+                Comes Here Description Comes Here Description Comes Here
+                Description Comes Here Description Comes Here{" "}
+              </Container>
           </Box>
-          <Box display={"flex"} flexDirection="row" width="full" justifyContent="space-between" height="full">
+          <Box flex="0.5" fontSize="l">
+              <Stat>
+                <StatLabel>Days Left </StatLabel>
+                <StatNumber>3</StatNumber>
+              </Stat>
+            </Box>
+        </Box>
+        <Box
+          boxShadow="dark-lg"
+          p={8}
+          my={4}
+          borderRadius="13px"
+          width="2xl"
+          color="#fff"
+          bgColor="#1E1E1E"
+        >
+          <Box
+            display={"flex"}
+            flexDirection="row"
+            width="full"
+            justifyContent="space-between"
+            height="full"
+          >
             <Stat>
-              <StatLabel>Visit Us</StatLabel>
-              <StatNumber>www.company.com</StatNumber>
-            </Stat>
+                <StatLabel>Company's Name</StatLabel>
+                <StatNumber color="teal">Company Name</StatNumber>
+              </Stat>
+              <Stat>
+                <StatLabel>Follow Us</StatLabel>
+                <StatNumber color="teal">@Twitter_Handel</StatNumber>
+              </Stat>
+          </Box>
+          <Box
+            display={"flex"}
+            flexDirection="row"
+            width="full"
+            justifyContent="space-between"
+            height="full"
+          >
             <Stat>
-              <StatLabel>Join Us</StatLabel>
-              <StatNumber>@Discord_Id</StatNumber>
-            </Stat>
+                <StatLabel>Company's Name</StatLabel>
+                <StatNumber color="teal">Company Name</StatNumber>
+              </Stat>
+              <Stat>
+                <StatLabel>Follow Us</StatLabel>
+                <StatNumber color="teal">@Twitter_Handel</StatNumber>
+              </Stat>
           </Box>
         </Box>
-        <Box p={2} mb={3} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
-            <Stat>
-              <StatLabel>Total Applications Field Till Now</StatLabel>
-              <StatNumber>200</StatNumber>
-            </Stat>
+        <Box
+          boxShadow="dark-lg"
+          p={8}
+          my={4}
+          borderRadius="13px"
+          width="2xl"
+          color="#fff"
+          bgColor="#1E1E1E"
+        >
+          <Stat>
+            <StatLabel>Total Applications Field Till Now</StatLabel>
+            <StatNumber>200</StatNumber>
+          </Stat>
         </Box>
-        <Box>
-            <FormControl display={"flex"} flexDir={"row"} mt={10}>
-              <Box>
-                <FormLabel>Do you want to share this information</FormLabel>
-              </Box>
-              <Box>
-                <Switch colorScheme='teal' defaultChecked onChange={()=>setShowUserInformation(!showUserInformtation)}/>
-              </Box>
-            </FormControl>
-            {
-              showUserInformtation
-              ?
-              <FormCommon type="users"/>
-              :
-              <></>
-            }
+        <Divider color="#1E1E1E" orientation="horizontal" my={7} />
+        <Box
+        boxShadow="dark-lg"
+        px={4}
+        pt={2.5}
+        pb={3}
+        my={4}
+        borderRadius="13px"
+        width="2xl"
+        color="#fff"
+        bgColor="#1E1E1E"
+        >
+          <FormControl display={"flex"} flexDir={"row"}>
+            <Box>
+              <FormLabel>Do you want to share this information</FormLabel>
+            </Box>
+            <Box>
+              <Switch
+                colorScheme="teal"
+                defaultChecked
+                onChange={() => setShowUserInformation(!showUserInformtation)}
+              />
+            </Box>
+          </FormControl>
+          {showUserInformtation ? <FormCommon type="users" /> : <></>}
         </Box>
-        <Box p={2} mb={2} borderRadius="13px" borderColor="red" borderWidth="thick" width="2xl">
-            <FormControl mt={1}>
-                <FormLabel>Job ID</FormLabel>
-                <Input size="md"/>
-            </FormControl>
-            <FormControl mt={5}>
-                <FormLabel>Why do u like to work for 3foRmd</FormLabel>
-                <Textarea size="md"/>
-            </FormControl>
-            <FormControl mt={5}>
-                <FormLabel>!!Roast Us!!</FormLabel>
-                <Textarea size="md"/>
-            </FormControl>
+        <Box
+          boxShadow="dark-lg"
+          p={8}
+          my={4}
+          borderRadius="13px"
+          width="2xl"
+          color="#fff"
+          bgColor="#1E1E1E"
+        >
+          <FormControl mt={1}>
+            <FormLabel>Job ID</FormLabel>
+            <Input size="md" />
+          </FormControl>
+          <FormControl mt={5}>
+            <FormLabel>Why do u like to work for 3foRmd</FormLabel>
+            <Textarea size="md" />
+          </FormControl>
+          <FormControl mt={5}>
+            <FormLabel>!!Roast Us!!</FormLabel>
+            <Textarea size="md" />
+          </FormControl>
         </Box>
-        </form>
+      </form>
+      </Box>
     </Flex>
-  )
-}
+  );
+};
 
-export default SimpleFormView
+export default SimpleFormView;
