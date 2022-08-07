@@ -11,6 +11,21 @@ Moralis.Cloud.define("getFormsByUserId", async (request) => {
   return result;
 });
 
+Moralis.Cloud.define("getFormsByFormId", async (request) => {
+  const formCreated = Moralis.Object.extend("formCreated");
+  const query = new Moralis.Query(formCreated);
+  query.equalTo("formId", request.params.formId);
+  const data = await query.first();
+  if(data)
+  {
+  	return data.attributes;
+  }
+  else
+  {
+  	return []
+  }
+});
+
 //update created
 Moralis.Cloud.define("getFormResponseById", async (request) => {
   const formResponses = Moralis.Object.extend("formResponses");
@@ -61,8 +76,8 @@ Moralis.Cloud.define("getCollectionFormsDataByFormId", async (request) => {
 	result.push(data[i].attributes)
   }
   return result;
-});
-
+});  
+  
 Moralis.Cloud.define("getGeneralFormDataByFormId", async (request) => {
   const GeneralForms = Moralis.Object.extend("GeneralForms");
   const query = new Moralis.Query(GeneralForms);
@@ -89,6 +104,7 @@ Moralis.Cloud.define("addUpdateForms", async (request) => {
     newForm.set('status',request.params.status);
     newForm.set('closingDate',request.params.closingDate);
     newForm.set('description',request.params.description);
+    newForm.set('metaData',request.params.metaData);
     await newForm.save().then((result)=>{
         return result
     })
@@ -139,27 +155,28 @@ Moralis.Cloud.define("addUpdateCustomAnswers", async (request) => {
     const customAnswers = Moralis.Object.extend("customAnswers");
     const query = new Moralis.Query(customAnswers);
     query.equalTo("ethAddress", request.params.ethAddress);
-    const results = await query.find();
+    const results = await query.first();
+    const newAnswer = new customAnswers();
     if (results)
     {
-        return true;
+		const allowed = results.attributes.allowedFormIds;
+      	allowed.push(request.params.formId)
+        newAnswer.set('allowedFormIds',allowed);
+      	
     }
     else
     {
-        const newCustomAnswerObject = Moralis.Object.extend("customAnswers");
-        const newAnswer = new newCustomAnswerObject();
+
         newAnswer.set('name',request.params.name);
-          newAnswer.set('ethAddress',request.params.ethAddress);
-        newAnswer.set('twitterHandle',request.params.twitterHandle);
-        newAnswer.set('linkedInId',request.params.linkedInId);
-        newAnswer.set('gmailId',request.params.gmailId);
+        newAnswer.set('ethAddress',request.params.ethAddress);
         newAnswer.set('twitterHandle',request.params.twitterHandle);
         newAnswer.set('githubId',request.params.githubId);
         newAnswer.set('discordId',request.params.discordId);
-        await newAnswer.save().then((result)=>{
+      	newAnswer.set('allowedFormIds',[request.params.formId]);
+    }
+    await newAnswer.save().then((result)=>{
             return result
         })
-    }
   }
   catch(error)
   {
@@ -187,6 +204,25 @@ Moralis.Cloud.define("addSurveyFormData", async (request) => {
   catch(error)
   {
       logger.error(`Error while adding Survey Form Data ${error}`);
+      return error;
+  }
+});
+
+Moralis.Cloud.define("addSurveyFormResponse", async (request) => {
+  const logger = Moralis.Cloud.getLogger();
+  try
+  {
+    const newSurveyResponseObject = Moralis.Object.extend("SurveyFormResponses");
+    const newSurveyFormResponse = new newSurveyResponseObject();
+    newSurveyFormResponse.set('formId',request.params.formId);
+    newSurveyFormResponse.set('walletAddress',request.params.walletAddress);
+    await newSurveyFormResponse.save().then((result)=>{
+            return result
+        })
+  }
+  catch(error)
+  {
+      logger.error(`Error while adding Survey Form Response ${error}`);
       return error;
   }
 });
