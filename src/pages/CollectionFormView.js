@@ -32,7 +32,9 @@ import { useForm } from "react-hook-form";
 import { getNanoid } from "../getNanoid";
 import { useNotification } from "web3uikit";
 import * as moment from "moment"
-
+import contractAbi from "../ABI/abi.json"
+import {ethers} from "ethers"
+const contractAddress = "0x0d6712258223eeecb587ecC101eCA75277Ea190e"
 const CollectionForm = (props) => {
   const {account, Moralis}= useMoralis()
   const [showUserInformtation, setShowUserInformation] = useState(true);
@@ -73,6 +75,25 @@ const CollectionForm = (props) => {
       position: "topR",
     });
   };
+
+  const submitFormOnchain = async (formId) => {
+    const abi = contractAbi.abi;
+    const { ethereum } = window;
+    try {
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const Txn = await contract.createFormCreatedEntry(formId, {value: 1,gasLimit: 300000});
+        await Txn.wait().then((result)=>{return result});
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const onSubmit = async (value) => {
     console.log("value", value);
     const responseData = {
@@ -93,6 +114,8 @@ const CollectionForm = (props) => {
       setLoading(true);
       await Moralis.Cloud.run("addUpdateFormsResponses", responseData)
       .then(async (result) => {
+        console.log("addSurveyFormData", result);
+          await submitFormOnchain(data.formId)
         if(showUserInformtation)
         {
           const customAnswer = {
