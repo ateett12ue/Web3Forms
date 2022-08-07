@@ -65,6 +65,7 @@ const SurveyForm = () => {
       status: true,
       closingDate: moment(value.endDate).format("DD/MM/YYYY hh:mm:ss"),
       description: value.description,
+      metaData: {}
     };
     setLoading(true);
     await Moralis.Cloud.run("addUpdateForms", formCreationData)
