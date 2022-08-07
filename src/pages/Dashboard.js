@@ -1,12 +1,15 @@
 import React,{useEffect, useState} from 'react'
 import CreateFormModal from "./CreateFormModal"
-import {Box, Tag} from "@chakra-ui/react"
+
+import {Box, Tag, useClipboard} from "@chakra-ui/react"
 import {useMoralis} from "react-moralis"
 import {Table, Badge, Typography, Button} from "web3uikit"
 import * as moment from "moment"
 const Dashboard = (props) => {
     const {Moralis, account} = useMoralis();
     const [formList, setFormList] = useState([])
+    const [formId, setFormId] = useState("")
+    const { hasCopied, onCopy } = useClipboard(formId)
     useEffect(()=>{
         async function fetchAllForms() {
             try
@@ -44,13 +47,17 @@ const Dashboard = (props) => {
         const result= data.forEach((formData) => {
             const dateLeft = moment(formData.closingDate, "DD/MM/YYYY hh:mm:ss").fromNow(); 
             let data = []
+            async function copyFormId(){
+                let formId = formData.formId;
+                await navigator.clipboard.writeText(`/user-view-form?formId=${formId}`);
+            }
             data.push(<><div style={{marginLeft: '16px'}}><Typography color="#041836" variant="body16">{formData.name}</Typography></div></>)
             data.push(<Typography color="#68738D" variant="body16">{formData.formId}</Typography>,)
             data.push(!formData.formId ? <Badge state="danger" text="Closed" /> : <Badge state="success" text="Active" />)
             data.push(<Typography color="#68738D" variant="body16">{formData.closingDate}</Typography>)
             data.push(<Tag size={'lg'} variant='solid' colorScheme='purple'>{formData.formType}</Tag>)
             data.push(<Tag size={'lg'} variant='solid' colorScheme='teal'>{dateLeft}</Tag>)
-            data.push(<><Button color="blue" isTransparent size="small" text="Responses" onClick={()=>openResponses(formData.formId)}/></>)
+            data.push(<><Button color="blue" isTransparent size="small" text="CopyFormId" onClick={copyFormId()}/></>)
             dataArray.push(data)
         })
         return dataArray;
