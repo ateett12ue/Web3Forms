@@ -28,6 +28,9 @@ import { useNotification } from "web3uikit";
 import Loader from "./Loader";
 import * as moment from "moment";
 import { useNavigate } from "react-router-dom";
+import contractAbi from "../ABI/abi.json"
+import {ethers} from "ethers"
+const contractAddress = "0x0d6712258223eeecb587ecC101eCA75277Ea190e"
 const SurveyForm = () => {
   const [submitModal, setSubmitModal] = useState(false);
   const [value, setValue] = useState(null);
@@ -53,6 +56,26 @@ const SurveyForm = () => {
       position: "topR",
     });
   };
+
+  const submitFormOnchain = async (formId) => {
+    const abi = contractAbi.abi;
+    const { ethereum } = window;
+    try {
+      if (ethereum) {
+        console.log("heeeereee")
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const Txn = await contract.addSurveyFormLockedAmount(formId, 10, {value: 10,gasLimit: 300000});
+        await Txn.wait().then((result)=>{return result});
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const submitForms = async (data) => {
     setSubmitModal(false);
     console.log("data", data);
@@ -78,6 +101,8 @@ const SurveyForm = () => {
             "0xcd969959893c13e270bab7cc7eec788e374f51fea99881708292492ef7538f2a",
           currentStatus: "created",
         };
+        console.log("addSurveyFormData", result);
+        await submitFormOnchain(formId)
         await Moralis.Cloud.run("addSurveyFormData", dataSent)
           .then((result) => {
             console.log("addSurveyFormData", result);
