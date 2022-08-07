@@ -27,6 +27,7 @@ const App = () => {
         (
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route exact path="/user-view-form" element={<UserFormView/>} />
           </Routes>
         )
         :
@@ -62,6 +63,7 @@ const App = () => {
             <Route exact path="/create-form/general-template" element={<SimpleForm/>} />
             <Route exact path="/user-view-form" element={<UserFormView/>} />
             <Route path="*" element={<NoMatch/>} />
+            
           </Routes>
           </>
         )
