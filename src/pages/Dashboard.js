@@ -21,8 +21,24 @@ const Dashboard = (props) => {
             }
            
         }
+        // async function UploadIpfs(ethAdd, data){
+        
+        //     const metaData = {
+        //         "name": ethAdd,
+        //         "description": data
+        //     }
+        //     const file = new Moralis.File("file.json", {base64: btoa(JSON.stringify(metaData ))})
+        //     await file.saveIPFS();
+        
+        //     console.log(file.ipfs(), file.hash())
+        
+        //     return file.ipfs();
+        // } 
+        
+        // UploadIpfs("asassasaas", {name:"atee", class:"assaas"})
+        
         fetchAllForms()
-    })
+    },[])
     const formMappedData = (data) => {
         const dataArray = []
         const result= data.forEach((formData) => {
