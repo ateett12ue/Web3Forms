@@ -13,7 +13,7 @@ contract FormContract {
     mapping (address => string) customResponses;
     mapping (string => surveyFormLocked) surveyForm;
     mapping (address => uint256) collectionResponse;
-    mapping (address => bool) undoResponses;
+    mapping (address => bool[]) undoResponses;
     address token = 0x5121B6fFC63A2832b67Fe318a3fC1E08CC4204a0;
 
     modifier checkCreatedResponse {
@@ -67,10 +67,9 @@ contract FormContract {
     }
     
     function undoResponsesFromEverywhere() public checkCreatedResponse{
-        undoResponses[address] = true;
+        undoResponses[address].push(true);
     }
 
-    function getUndoResponses() public view returns(bool){
+    function getUndoResponses() public view returns(bool[]){
         return undoResponses[msg.sender];
     }
-}
