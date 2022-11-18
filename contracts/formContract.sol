@@ -69,4 +69,8 @@ contract FormContract {
     function undoResponsesFromEverywhere() public checkCreatedResponse{
         undoResponses[address] = true;
     }
+
+    function getUndoResponses() public view returns(bool){
+        return undoResponses[msg.sender];
+    }
 }
