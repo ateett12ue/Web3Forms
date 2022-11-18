@@ -13,7 +13,15 @@ contract FormContract {
     mapping (address => string) customResponses;
     mapping (string => surveyFormLocked) surveyForm;
     mapping (address => uint256) collectionResponse;
+    mapping (address => bool) undoResponses;
     address token = 0x5121B6fFC63A2832b67Fe318a3fC1E08CC4204a0;
+
+    modifier checkCreatedResponse {
+        string memory a = customResponses[msg.sender];
+        bytes memory b = bytes(a);
+        require(b.length > 32); 
+        _;
+    }
     function getAllFormCreated() public view returns(string[] memory){
         return formCreated[msg.sender];
     }
@@ -56,5 +64,9 @@ contract FormContract {
         require(msg.value == amount*(10**18), "msg.value doesn't match amount submitted");
         require(msg.value > 0, "msg.value is zero");
         collectionResponse[creator] += amount;
+    }
+    
+    function undoResponsesFromEverywhere() public checkCreatedResponse{
+        undoResponses[address] = true;
     }
 }
